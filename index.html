@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>法律与人工智能联合中心</title>
+    <style>
+        /* ----- 全局样式 ----- */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Segoe UI', Roboto, system-ui, sans-serif; background: #f8f9fa; color: #1e2a3a; line-height: 1.6; }
+        a { color: #0d6efd; text-decoration: none; }
+        a:hover { text-decoration: underline; }
+        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+
+        #banner { background: linear-gradient(135deg, #0b2a4a 0%, #1a4a6e 100%); color: #fff; padding: 20px 0 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.15); }
+        #banner .container { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; }
+        #logo { height: 50px; max-height: 60px; margin: 0 20px 0 0; }
+        #nav-menu { display: flex; flex-wrap: wrap; list-style: none; gap: 8px 16px; margin: 8px 0; }
+        #nav-menu a { color: rgba(255,255,255,0.8); font-weight: 500; padding: 4px 0; border-bottom: 2px solid transparent; transition: 0.2s; font-size: 1rem; cursor: pointer; }
+        #nav-menu a:hover, #nav-menu a.active { color: #fff; border-bottom-color: #ffc107; text-decoration: none; }
+        #lang-switcher { display: flex; gap: 6px; margin-left: 10px; }
+        #lang-switcher button { background: rgba(255,255,255,0.12); border: 1px solid rgba(255,255,255,0.25); color: #fff; padding: 4px 12px; border-radius: 20px; cursor: pointer; font-size: 0.85rem; transition: 0.2s; font-weight: 500; }
+        #lang-switcher button:hover { background: rgba(255,255,255,0.25); }
+        #lang-switcher button.active-lang { background: #ffc107; color: #0b2a4a; border-color: #ffc107; }
+
+        #content { padding: 30px 0 60px; min-height: 60vh; }
+        #page-container { animation: fadeUp 0.25s ease; }
+        @keyframes fadeUp { 0% { opacity: 0; transform: translateY(12px); } 100% { opacity: 1; transform: translateY(0); } }
+
+        /* 通用组件样式 */
+        h1 { font-size: 2.2rem; font-weight: 700; margin-bottom: 16px; color: #0b2a4a; }
+        h2 { font-size: 1.6rem; font-weight: 600; margin: 28px 0 16px; color: #1a4a6e; border-bottom: 2px solid #e9ecef; padding-bottom: 8px; }
+        h3 { font-size: 1.2rem; font-weight: 600; margin: 20px 0 10px; color: #2c3e50; }
+
+        /* ---------- 图片居中（关键改动） ---------- */
+        .img-placeholder {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 8px;
+            margin: 16px auto;        /* 左右自动居中 */
+            background: #dee2e6;
+            display: block;           /* 块级化，配合 margin: auto */
+        }
+
+        .news-list { list-style: none; padding: 0; }
+        .news-list li { padding: 10px 0; border-bottom: 1px solid #e9ecef; }
+        .news-list li:last-child { border-bottom: none; }
+        .news-date { font-weight: 600; color: #495057; margin-right: 16px; display: inline-block; min-width: 80px; }
+
+        .people-item { margin: 12px 0; padding: 12px 16px; background: #fff; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); }
+        .people-item strong { font-size: 1.05rem; }
+        .people-item .interests { color: #495057; font-size: 0.95rem; }
+        .people-item .email { font-size: 0.9rem; color: #0d6efd; }
+
+        .opportunity-list { list-style: none; padding: 0; }
+        .opportunity-list li { background: #fff; padding: 14px 18px; margin-bottom: 10px; border-radius: 6px; box-shadow: 0 1px 4px rgba(0,0,0,0.04); border-left: 4px solid #0d6efd; }
+        .opportunity-list .pos-name { font-weight: 600; font-size: 1.05rem; }
+        .opportunity-list .pos-req { color: #495057; margin-top: 4px; font-size: 0.95rem; }
+        .contact-line { margin-top: 24px; font-size: 1.05rem; font-weight: 500; }
+        .placeholder-text { color: #6c757d; font-size: 1.1rem; padding: 20px 0; }
+
+        @media (max-width: 760px) {
+            #banner .container { flex-direction: column; align-items: stretch; }
+            #logo { height: 40px; margin: 0 auto 8px; display: block; }  /* 移动端logo居中 */
+            #nav-menu { justify-content: center; gap: 4px 12px; }
+            #lang-switcher { justify-content: center; margin: 8px 0 0; }
+            h1 { font-size: 1.8rem; }
+            h2 { font-size: 1.3rem; }
+            .news-date { display: block; margin-bottom: 4px; }
+            .img-placeholder { max-width: 100%; }  /* 移动端全宽 */
+        }
+    </style>
+</head>
+<body>
+
+<!-- ====== BANNER ====== -->
+<header id="banner">
+    <div class="container">
+        <img id="logo" src="logo.jpg" alt="实验室 Logo" />
+        <nav>
+            <ul id="nav-menu">
+                <li><a data-page="home" class="active">首页</a></li>
+                <li><a data-page="people">成员</a></li>
+                <li><a data-page="research">研究</a></li>
+                <li><a data-page="opportunity">机会</a></li>
+                <li><a data-page="news">新闻</a></li>
+                <li><a data-page="software">软件</a></li>
+            </ul>
+        </nav>
+        <div id="lang-switcher">
+            <button data-lang="zh" class="active-lang">中文</button>
+            <button data-lang="en">English</button>
+        </div>
+    </div>
+</header>
+
+<!-- ====== 主内容 ====== -->
+<main id="content">
+    <div class="container">
+        <div id="page-container"></div>
+    </div>
+</main>
+
+<script>
+    // ============================================================
+    // 1. 新闻数据（唯一数据源）
+    // ============================================================
+    const newsData = [
+        { date: "2026/8/14", zh: { text: "内容占位符1", link: "https://www.baidu.com" }, en: { text: "Content placeholder 1", link: "https://www.baidu.com" } },
+        { date: "2026/8/14", zh: { text: "内容占位符2", link: "https://www.baidu.com" }, en: { text: "Content placeholder 2", link: "https://www.baidu.com" } },
+        { date: "2026/8/14", zh: { text: "内容占位符3", link: "https://www.baidu.com" }, en: { text: "Content placeholder 3", link: "https://www.baidu.com" } },
+        { date: "2026/8/14", zh: { text: "内容占位符4", link: "https://www.baidu.com" }, en: { text: "Content placeholder 4", link: "https://www.baidu.com" } }
+    ];
+
+    // ============================================================
+    // 2. 导航文本
+    // ============================================================
+    const navTexts = {
+        zh: { home: '首页', people: '成员', research: '研究', opportunity: '机会', news: '新闻', software: '软件' },
+        en: { home: 'Home', people: 'People', research: 'Research', opportunity: 'Opportunity', news: 'News', software: 'Software' }
+    };
+    const pageTitles = { zh: '法律与人工智能联合中心', en: 'Joint Center for Law and Artificial Intelligence' };
+
+    // ============================================================
+    // 3. 渲染新闻列表
+    // ============================================================
+    function renderNewsList(lang) {
+        let html = '<ul class="news-list">';
+        newsData.forEach(item => {
+            const entry = item[lang];
+            html += `<li><span class="news-date">${item.date}</span><a href="${entry.link}" target="_blank">${entry.text}</a></li>`;
+        });
+        html += '</ul>';
+        return html;
+    }
+
+    // ============================================================
+    // 4. 状态与DOM
+    // ============================================================
+    let currentLang = 'zh';
+    let currentPage = 'home';
+    const container = document.getElementById('page-container');
+    const navLinks = document.querySelectorAll('#nav-menu a');
+    const langBtns = document.querySelectorAll('#lang-switcher button');
+
+    // ============================================================
+    // 5. 加载页面
+    // ============================================================
+    async function loadPage(page, lang) {
+        const url = `pages/${page}_${lang}.html`;
+        try {
+            const response = await fetch(url);
+            if (!response.ok) {
+                container.innerHTML = `<p style="color:#6c757d;">⚠️ 加载失败（404）：<strong>${url}</strong> 不存在。请检查 pages 目录。</p>`;
+                return;
+            }
+            let html = await response.text();
+            container.innerHTML = html;
+
+            const newsContainer = document.getElementById('news-container');
+            if (newsContainer) {
+                newsContainer.innerHTML = renderNewsList(lang);
+            }
+
+            navLinks.forEach(link => link.classList.remove('active'));
+            const activeLink = document.querySelector(`#nav-menu a[data-page="${page}"]`);
+            if (activeLink) activeLink.classList.add('active');
+
+            document.title = pageTitles[lang] || '实验室';
+        } catch (error) {
+            container.innerHTML = `<p style="color:#6c757d;">⚠️ 网络错误：无法请求 <strong>${url}</strong>。请确保使用 HTTP 服务器访问，而非 file:// 协议。</p>`;
+        }
+    }
+
+    // ============================================================
+    // 6. 更新导航与语言
+    // ============================================================
+    function updateNavAndLang() {
+        const texts = navTexts[currentLang];
+        navLinks.forEach(link => {
+            const page = link.dataset.page;
+            if (page && texts[page]) link.textContent = texts[page];
+        });
+        langBtns.forEach(btn => btn.classList.toggle('active-lang', btn.dataset.lang === currentLang));
+    }
+
+    function switchPage(page) {
+        if (page === currentPage) { loadPage(page, currentLang); return; }
+        currentPage = page;
+        updateNavAndLang();
+        loadPage(currentPage, currentLang);
+    }
+
+    function switchLanguage(lang) {
+        if (lang === currentLang) return;
+        currentLang = lang;
+        updateNavAndLang();
+        loadPage(currentPage, currentLang);
+    }
+
+    // ============================================================
+    // 7. 事件绑定
+    // ============================================================
+    document.addEventListener('DOMContentLoaded', function() {
+        navLinks.forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const page = this.dataset.page;
+                if (page) switchPage(page);
+            });
+        });
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', function() {
+                const lang = this.dataset.lang;
+                if (lang) switchLanguage(lang);
+            });
+        });
+        currentPage = 'home';
+        currentLang = 'zh';
+        updateNavAndLang();
+        loadPage('home', 'zh');
+    });
+</script>
+
+</body>
+</html>
