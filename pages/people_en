@@ -1,0 +1,24 @@
+<h1>People</h1>
+<h2>Principal Investigator (PI)</h2>
+<div class="people-item">
+    <strong><a href="https://www.baidu.com" target="_blank">name1</a></strong>
+    <div class="interests">AI and Law</div>
+    <div class="email"><a href="mailto:name1@example.com">name1@example.com</a></div>
+</div>
+<h2>Current Members</h2>
+<div class="people-item">
+    <strong><a href="https://www.baidu.com" target="_blank">name2</a></strong>
+    <div class="interests">Data Privacy</div>
+    <div class="email"><a href="mailto:name2@example.com">name2@example.com</a></div>
+</div>
+<div class="people-item">
+    <strong><a href="https://www.baidu.com" target="_blank">name3</a></strong>
+    <div class="interests">Machine Learning</div>
+    <div class="email"><a href="mailto:name3@example.com">name3@example.com</a></div>
+</div>
+<h2>Alumni</h2>
+<div class="people-item">
+    <strong><a href="https://www.baidu.com" target="_blank">name4</a></strong>
+    <div class="interests">Legal Reasoning</div>
+    <div class="email"><a href="mailto:name4@example.com">name4@example.com</a></div>
+</div>
